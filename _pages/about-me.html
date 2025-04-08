@@ -1,0 +1,139 @@
+---
+layout: archive
+title: "About me"
+author_profile: true
+permalink: /about-me/
+---
+
+<div class="page-container">
+  <div class="content-wrapper">
+    <div class="text-content">
+      <p>Hey!</p>
+
+      <p>I'm Andy - a 24 year old ML Engineer living in San Francisco.</p>
+
+      <p>I'm currently working on a variety of models at Hive AI. Prior to that, I studied 
+          Applied-Mathematics & Computer Science at Brown University. I also did research
+          which was accepted to NeurIPS 2023, and interned as a software engineer at Amazon
+          and Meta.</p>
+
+      <p>Outside of my work at Hive, I enjoy keeping up with ML interpretability research.</p>
+
+      <p>In my free time, I enjoy playing volleyball, surfing, following sports, and spending
+           time in nature, especially with friends.</p>
+    </div>
+  </div>
+  
+  <div class="image-container">
+    <!-- <img src="/images/IMG_5334.jpg" alt="Hobbies2" class="corner-image"> -->
+    <img src="/images/FullSizeRender.JPEG" alt="Hobbies" class="bottom-image">
+  </div>
+</div>
+
+<style>
+/* Override theme defaults */
+.archive {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.sidebar {
+  margin-left: -60px !important;
+  padding-left: 0 !important;
+}
+
+.sidebar p {
+  margin: 0;
+  padding: 0;
+}
+
+.author__avatar {
+  padding-left: 0;
+}
+
+.author__content {
+  padding-left: 0;
+}
+
+.author__urls-wrapper {
+  padding-left: 0;
+}
+
+/* Main content styles */
+.page-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 40px;
+}
+
+.content-wrapper {
+  flex: 1;
+  max-width: 600px;
+  padding: 0;
+  margin: 0;
+}
+
+.text-content {
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.text-content p {
+  margin: 1em 0;
+  padding: 0;
+  text-align: left;
+  max-width: 600px;
+}
+
+.image-container {
+  width: 350px;
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: flex-start;
+  margin-left: auto;
+}
+
+.corner-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.bottom-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  
+  .image-container {
+    width: 100%;
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 0;
+  }
+  
+  .corner-image, .bottom-image {
+    width: 200px;
+  }
+  
+  .sidebar {
+    margin-left: 0;
+  }
+}
+</style>

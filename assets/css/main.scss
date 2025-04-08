@@ -1,43 +1,50 @@
 ---
 ---
 
+
+
 /*
  * This file controls what is imported from /_sass
- *
- * Note that the files are processed in the order they are imported, so they are partly
-   sorted by the dependencies. Also, the first two lines of the file are required by Jekyll.
  */
 
-@import
-    "vendor/breakpoint/breakpoint",
+@import "vendor/breakpoint/breakpoint";
+@import "themes";
+@import "theme/default";
+@import "theme/dark";
+@import "include/mixins";
+@import "vendor/susy/susy";
+@import "layout/reset";
+@import "layout/base";
+@import "include/utilities";
+@import "layout/tables";
+@import "layout/buttons";
+@import "layout/notices";
+@import "layout/masthead";
+@import "layout/navigation";
+@import "layout/footer";
+@import "syntax";
+@import "layout/forms";
+@import "layout/page";
+@import "layout/archive";
+@import "layout/sidebar";
+@import "vendor/font-awesome/fontawesome";
+@import "vendor/font-awesome/solid";
+@import "vendor/font-awesome/brands";
+@import "vendor/magnific-popup/magnific-popup";
+@import "custom";
+@import "minimal-mistakes";
 
-    "themes",
-    "theme/default",
-    "theme/dark",
+/* Custom styles */
+.sidebar {
+  margin-left: -60px !important;
+  padding-left: 0 !important;
+}
 
-    "include/mixins",
-    "vendor/susy/susy",
+.page-container {
+  margin-left: -30px !important;
+}
 
-    "layout/reset",
-    "layout/base",
-
-    "include/utilities",
-    "layout/tables",
-    "layout/buttons",
-    "layout/notices",
-    "layout/masthead",
-    "layout/navigation",
-    "layout/footer",
-    "syntax",
-
-    "layout/forms",
-
-    "layout/page",
-    "layout/archive",
-    "layout/sidebar",
-
-    "vendor/font-awesome/fontawesome",
-    "vendor/font-awesome/solid",
-    "vendor/font-awesome/brands",
-    "vendor/magnific-popup/magnific-popup"
-;
+.content-wrapper {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
