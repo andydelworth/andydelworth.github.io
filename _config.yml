@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default"
-title                    : "Andy's Blog"
+title                    : "Andy Delworth"
 title_separator          : "-"
 name                     : &name "Andrew (Andy) Delworth"
 description              : &description "personal description"
