@@ -1,6 +1,6 @@
 ---
 title: 'Finding Interpretable Features in Llama 3 from Scratch'
-date: 2015-04-10
+date: 2025-04-10
 permalink: /posts/2025/04/finding-features/
 tags:
   - interpretability
@@ -8,18 +8,16 @@ tags:
   - saes
 ---
 
-Headings are cool
+Coming Soon!
 ======
+
+<!--
 
 You can have many headings
 ======
 
 Aren't headings cool?
 ------
-
-<script type="text/javascript" async
-    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
 
 Here's some example code in Python:
 ```python
@@ -72,3 +70,4 @@ where $n$ is the number of training examples.
 In our code above, this is implemented using PyTorch's MSE loss:
 
 
+-->
