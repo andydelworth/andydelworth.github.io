@@ -8,15 +8,28 @@ tags:
   - saes
 ---
 
-Coming Soon!
-======
+## Coming Soon!
 
-<!--
 
-You can have many headings
-======
+<!-- hello -->
 
-Aren't headings cool?
+## Motivation
+
+Large Language Models (LLMs) are useful tools for a variety of downstream 
+applications, including coding tasks, writing tasks, educational assistance,
+and more. Historically, it has been difficult to understand why LLMs, and 
+neural nets more broadly, produce a certain output for a given input. The field
+of mechanistic interpretability aims to understand the internal workings of 
+machine learning models, so that users and scientists can be better informed
+about their behavior. This is desirable for a number of reasons:
+
+1. Safety
+2. Increase performance
+
+
+
+
+<!-- Aren't headings cool?
 ------
 
 Here's some example code in Python:
@@ -67,7 +80,4 @@ $\mathcal{L} = \frac{1}{n}\sum_{i=1}^n \|x_i - \hat{x}_i\|^2$
 
 where $n$ is the number of training examples.
 
-In our code above, this is implemented using PyTorch's MSE loss:
-
-
--->
+In our code above, this is implemented using PyTorch's MSE loss: -->
