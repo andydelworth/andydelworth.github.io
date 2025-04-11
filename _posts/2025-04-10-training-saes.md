@@ -198,6 +198,94 @@ Letting it run overnight. Let's move on :)
 Some considerations here:
 
 1. Anthropic only trained their SAE for one epoch. Let's do the same.
+2. 
+
+First, we create a Dataset class for our activations. 
+
+```
+class ActivationDataset(Dataset):
+    def __init__(self, data_root, layer_num, train=True):
+        if train:
+            self.files = [os.path.join(data_root, f) for f in os.listdir(data_root) if f.endswith('.pt') and int(f.split('_')[-1].split('.')[0]) % 8 != 0]
+        else:
+            self.files = [os.path.join(data_root, f) for f in os.listdir(data_root) if f.endswith('.pt') and int(f.split('_')[-1].split('.')[0]) % 8 == 0]
+
+        self.idx_map = {}
+        total_len = 0
+        for fp in tqdm(self.files, desc='Preprocessing activations'):
+        # for fp in self.files:
+            try:
+                activations = torch.load(fp)
+            except Exception as e:
+                print(f'Error loading {fp}: {e}')
+                raise e
+            for j in range(len(activations)):
+                self.idx_map[j + total_len] = (fp, j)
+            total_len += len(activations)
+        
+    def __getitem__(self, idx):
+        fp, inner_batch_idx = self.idx_map[idx]
+        batch = torch.load(fp, map_location='cpu')
+        return batch[inner_batch_idx]
+    
+    def __len__(self):
+        if len(self.idx_map) == 0:
+            return 0
+        return max(self.idx_map.keys()) + 1
+```
+
+This class implementation allows me to sample randomly and uniformly from
+the entire set of token activations. However, a bottleneck appears. To load a
+single token, we may need to read into a 32M data file from disk. Let's see if 
+this can actually load data fast enough to not slow down training.
+
+Timing test:
+
+```
+TODO - insert timing benchmark.
+```
+
+Results:
+```
+Timing train loader...
+1001it [01:42,  9.79it/s]
+
+Train loader sample took 105.42s
+Effective throughput: 379.44 samples/sec
+```
+
+This is slower than we would like. A better data storage/loading solution may
+be [HDF5](https://docs.h5py.org/en/stable/index.html). This lets us store all
+of our tensors in one large file, with random read access to locations in the 
+file. So, we can load only the tensor we are sampling for traininginto memory.
+
+Implementation (see ):
+```
+class HDF5ActivationDataset(Dataset):
+    def __init__(self, hdf5_file, split="train"):
+        """
+        PyTorch Dataset for HDF5 storage.
+        
+        Args:
+            hdf5_file (str): Path to the HDF5 file.
+            split (str): Dataset split, "train" or "test".
+        """
+        self.hdf5_file = hdf5_file
+        self.split = split
+
+        # Open file to get dataset size
+        with h5py.File(self.hdf5_file, "r") as f:
+            self.length = len(f[self.split])
+
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, index):
+        with h5py.File(self.hdf5_file, "r") as f:
+            tensor = torch.tensor(f[self.split][index])  # Load tensor lazily
+        return tensor
+```
+
 
 
 <!-- Aren't headings cool?
