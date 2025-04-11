@@ -242,8 +242,17 @@ this can actually load data fast enough to not slow down training.
 Timing test:
 
 ```
-TODO - insert timing benchmark.
+Timing train loader...
+1001it [02:23,  6.96it/s]
+
+Train loader sample took 151.00s averaged across 8 processes
 ```
+I'm not sure if 6.6 batches/second per gpu will be a bottleneck. To be safe, I'm
+going to pivot away from this and use HDF5 file format to store all of our activations,
+which supports random access reads, unlike .pt files which require us to deserialize the entire tensor.
+This is a cleaner solution. If desired, here is the [conversion script](https://github.com/andydelworth/sae-fun/blob/main/pt_to_hdf5.py). 
+
+Benchmarking HDF5 dataloading:
 
 Results:
 ```
