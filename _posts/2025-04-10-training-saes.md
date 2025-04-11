@@ -8,22 +8,17 @@ tags:
   - saes
 ---
 
-## Coming Soon!
-
-
-<!-- hello -->
-
 ## Introduction
 
 I'm documenting my attempts at finding interpretable feature directions in 
-Llama-3-8B! 
+[Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B)! I plan on documenting my plans, learnings, and findings, in this post. If you're reading this - it's not quite complete, so check back soon!
 
 ## Motivation
 
 Large Language Models (LLMs) are useful tools for a variety of downstream 
 applications, including coding tasks, writing tasks, educational assistance,
 and more. Historically, it has been difficult to understand why LLMs, and 
-neural nets more broadly, produce a certain output for a given input. The field
+neural networks more broadly, produce a certain output for a given input. The field
 of mechanistic interpretability aims to understand the internal workings of 
 machine learning models, so that users and scientists can be better informed
 about their behavior. This is desirable for a number of reasons:
@@ -31,14 +26,14 @@ about their behavior. This is desirable for a number of reasons:
 1. Safety: If we can understand the algorithms the neural net is performing,
 we can identify and/or mitigate algorithms that could be harmful.
 2. Increase performance: If we can understand the activation space of a model,
-we may be able to craft techniques to increase model performance. 
+we may be able to craft techniques to increase model performance (see [Discovering Latent Knowledge](https://arxiv.org/abs/2212.03827)).
 
 
 ## Approach
 
 The work to find interpretable features can be separated into the following chunks.
 
-1. Compute activations: We are going to save a large number (billions?) of activations
+1. Compute activations: We are going to save a large number of activations
 to disk. I will check existing literature on several parameters, including the scale
 of activations I need and the layer to take the activations from. I anticipate disk
 space may be a bottleneck here.
@@ -64,13 +59,13 @@ Here we go!
 
 We have some design decisions to make here.
 
-1. There are 32 layers in Llama-3-8B. We will follow the precedent in Templeton et. al and use
+1. There are 32 layers in Llama-3-8B. We will follow the precedent in [Templeton et. al](https://transformer-circuits.pub/2024/scaling-monosemanticity/) and use
 the activations from a middle layer (the 16th layer). 
-2. Different SAE work uses activations from different locations (https://arxiv.org/pdf/2309.08600). 
-We again will follow Templeton et. al and use the activations from the residual stream. 
+2. [Previous SAE literature](https://arxiv.org/pdf/2309.08600) uses activations from different locations. 
+We again will follow [Templeton et. al](https://transformer-circuits.pub/2024/scaling-monosemanticity/) and use the activations from the residual stream. 
 3. To accelerate inference + reduce disk space, we run the model with ```torch.cuda.amp.autocast()``` 
 and save our activations in ```bfloat16```.
-4. We use the FineWeb dataset to collect activations. This is a fairly general dataset, which is
+4. We use the [FineWeb dataset](https://huggingface.co/datasets/HuggingFaceFW/fineweb) to collect activations. This is a fairly general dataset, which is
 what we want.
 5. Tokens per document. I am going to store the activations of 10% of tokens within a given document. 
 This percentage was chosen arbitrarily - if I stored all of the tokens, I would run into my disk space
@@ -196,7 +191,7 @@ file, where the tensor has shape ```'torch.Size([4006, 4096])'``` (note that 409
 This file is 32M. That means that our 2.5T budget could store $2.5 * 1000 * 1000 * 4006 / 32 = ~3.13e8$ activations. Not a bad start? A
 quick search did not reveal to me the scale at which others have trained their SAEs - so let's see how this does.
 
-Let's move on :)
+Letting it run overnight. Let's move on :)
 
 ### Training an SAE
 
