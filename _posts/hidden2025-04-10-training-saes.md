@@ -261,6 +261,14 @@ Timing train loader...
 
 Train loader sample took 105.42s
 Effective throughput: 379.44 samples/sec
+
+
+Timing train loader...
+1001it [00:06, 151.24it/s]
+
+Train loader sample took 64.69s averaged across 8 processes
+Effective throughput: 4946.97 samples/sec
+
 ```
 
 This is slower than we would like. A better data storage/loading solution may
