@@ -1,6 +1,6 @@
 ---
-title: 'Finding Interpretable Features in Llama 3 from Scratch'
-date: 2025-04-10
+title: 'WIP - Finding Interpretable Features in Llama 3 from Scratch'
+date: 2025-04-18
 permalink: /posts/2025/04/finding-features/
 tags:
   - interpretability
@@ -27,7 +27,10 @@ about their behavior. This is desirable for a number of reasons:
 we can identify and/or mitigate algorithms that could be harmful.
 2. Increase performance: If we can understand the activation space of a model,
 we may be able to craft techniques to increase model performance (see [Discovering Latent Knowledge](https://arxiv.org/abs/2212.03827)).
-
+3. Gaining new knowledge: Language models are increasingly able to perform
+complex tasks. Sometimes the algorithms they compute to perform these tasks will
+be similar to the algorithms humans compute (e.g., [pattern matching](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html)). Sometimes, the algorithms they compute
+may differ from the algorithms humans compute (e.g., [arithmetic](https://arxiv.org/pdf/2502.00873))
 
 ## Approach
 
