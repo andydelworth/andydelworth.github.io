@@ -305,3 +305,52 @@ class HDF5ActivationDataset(Dataset):
             tensor = torch.tensor(f[self.split][index])  # Load tensor lazily
         return tensor
 ```
+
+Now, it's time to implement the SAE. Our first go is a very simple model. There is
+a linear encoder, followed by a ReLU layer, followed by a linear decoder layer. This
+is the same as the implementation in [Templeton et. al](https://transformer-circuits.pub/2024/scaling-monosemanticity/).
+We note that more recent works make several improvements to the SAE training procedure
+and architecture, such as use of [TopK Activation Function](https://arxiv.org/pdf/2406.04093) instead of ReLU.
+
+```
+class SAE(nn.Module):
+    def __init__(self, input_dim, hidden_dim, l1_lambda=1):
+        super().__init__()
+        self.encoder = torch.nn.Sequential(
+            torch.nn.Linear(input_dim, hidden_dim),
+            torch.nn.ReLU()
+        )
+        self.decoder = torch.nn.Sequential(
+            torch.nn.Linear(hidden_dim, input_dim),
+        )
+        self.hidden_dim = hidden_dim
+        self.l1_lambda = l1_lambda
+    
+    def forward(self, x):
+        sparse_representation = self.encoder(x)
+        reconstruction = self.decoder(sparse_representation)
+        return reconstruction, sparse_representation
+```
+
+The training loop can be seen in my [github repository](https://github.com/andydelworth/sae-fun/blob/main/train_sae.py).
+
+### LM + SAE Inference on new data
+
+We run inference on a held out split of text data from the FineWeb dataset and 
+store the feature activations (this is what we call the ReLU activations in the
+hidden layer of our SAE). Note that these vectors are really big - 64x the size
+of a regular residual stream vector. However, they also *should* be sparse. We may
+want to leverage the [sparsity](https://pytorch.org/docs/stable/sparse.html) functionality
+that torch offers.
+
+In addition to storing feature activations, we also want to store the associated
+tokens - this will allow us to associate feature activations to real-world concepts
+using an LM driven automated interpretability pipeline. We use HuggingFaceTB/cosmopedia
+as our inference dataset, as it seems to contain a diverse set of data, which should 
+maximize the chance that many SAE learned features are present within this data. 
+
+
+### Interpreting Features
+
+Now that we have a trained model, we will try to intepret it's learned features.
+This is non-trivial - 
