@@ -32,6 +32,10 @@ complex tasks. Sometimes the algorithms they compute to perform these tasks will
 be similar to the algorithms humans compute (e.g., [pattern matching](https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html)). Sometimes, the algorithms they compute
 may differ from the algorithms humans compute (e.g., [arithmetic](https://arxiv.org/pdf/2502.00873))
 
+Note that for personal development, I plan to avoid the use of most libraries other
+than torch. In the future, I plan to work with [SAE Lens](https://github.com/jbloomAus/SAELens)
+to make experimentation easier. 
+
 ## Approach
 
 The work to find interpretable features can be separated into the following chunks.
@@ -352,5 +356,24 @@ maximize the chance that many SAE learned features are present within this data.
 
 ### Interpreting Features
 
+
 Now that we have a trained model, we will try to intepret it's learned features.
-This is non-trivial - 
+This is non-trivial. First, let's do this somewhat manually, to see if anything
+strikes us. 
+
+The pipeline here is follows:
+
+- Run the SAE on a new held out dataset. Store the SAE activations, as well as
+the corresponding token ids.
+    - Since our SAE activations are very high dimensional (64 x 4096), we utilize
+    the torch.sparse library for more efficient storage. 
+- Create a script which allows us to quickly visualize the tokens for
+which a certain feature most strongly fires.
+
+These two scripts are available at sae_inference.py and manual_interp.py on my
+github. Let's take a look at the tokens which most strongly fire feature number 
+29!
+
+```
+
+```
