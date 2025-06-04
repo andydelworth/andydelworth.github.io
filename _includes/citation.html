@@ -1,0 +1,8 @@
+{% assign cite = site.data.citations | where: "id", include.id | first %}
+<span class="citation" title="{{ cite.title }} - {{ cite.author }} ({{ cite.year }}){% if cite.journal %}, {{ cite.journal }}{% endif %}">
+  {% if cite.url %}
+    <a href="{{ cite.url }}" target="_blank">[{{ include.index }}]</a>
+  {% else %}
+    [{{ include.index }}]
+  {% endif %}
+</span> 
